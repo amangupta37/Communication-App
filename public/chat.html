@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="https://img.icons8.com/fluent/48/000000/telegram-app.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Application</title>
+</head>
+<body>
+
+<div class="header">
+    <div class="app-section">
+        <div class="logo-img">
+            <img id="logo" src="https://img.icons8.com/color/48/000000/chat--v3.png"/>
+        </div>
+        <div class="app-name">
+            <h1>Chatify</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="side-navbar">
+        <h1>This is chating the app</h1>
+    </div>
+
+    <div class="message-area">
+        
+        <div class="room-name">
+            <div class="room-name-box">
+                <h2 >Room 1 </h2>
+            </div>
+        </div>
+    
+        <div class="room-msg">
+            <div id="message"></div>
+        </div>
+        
+    
+        <div class="input-msg-box">
+
+
+            <div class="form-box">
+                <form id="form-box">
+                    <div class="input-box-cont">
+                        <input type="text" id="input-box" placeholder="Type a message" autocomplete="off"/>
+                    </div>
+                    <div class="send-btn">
+                        <button id="btn">  
+                            <img id="btn" src="./images/btn-icon.png" />
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="location-btn">
+                <button id="share-location-btn">
+                    <img id="gmap-logo"  src="./images/gmap.png" />
+                </button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+    <script id="message-template" type="text/html">
+        <div class="user-message">
+              <div class="user-name">
+               <h3>Aman Gupta</h3>
+              </div>
+              <div class="user-text">
+                <p>{{message}}</p>
+              </div>
+              <div class="duration">
+                <p>{{createdAt}}</p>
+              </div>
+        </div>
+    </script>
+
+    <script id="location-message-template" type="text/html">
+        
+        <div class="user-message">
+            <div class="user-name">
+             <h3>Aman Gupta</h3>
+            </div>
+            <div class="user-text">
+                <a id="style-link" href="{{Location}}" target="_blank">
+                  <div class="link-location">
+                    <div class="my-currentloacation">
+                        <p>View My Current Location </p>
+                     </div>
+                     <div class="location-l">
+                         <img id="user-l" src="./images/user-l.png" />
+                     </div>
+                  </div>  
+                </a>
+            </div>
+            <div class="duration">
+              <p>{{createdAt}}</p>
+            </div>
+      </div>
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+
+</body>
+</html>
