@@ -6,6 +6,10 @@ const { connected } = require('process');
 const Filter = require('bad-words');
 const {generateMessage} = require('./utils/message');
 const {generateLocation} = require('./utils/location');
+const { addUser,removeUser,getUser,getUsersInRoom} = require('./utils/users');
+
+
+
 
 const app = express();
 const server = http.createServer(app);
@@ -18,35 +22,44 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-// let count =0;
 
 io.on('connection' , (socket) =>{
 
     console.log('new websocket connection !!!')
 
-        
-        // 1. socket.emit --> emits data to a single connected client
+        socket.on('join',({ username, room}, callback) =>{
 
-        // 2. socket.broadcast.emit --> emits data to every client connected 
-        //                         except the client which is joined
+           const {error, user} =  addUser({id:socket.id, username ,room})
 
-        // 3. io.emit ---> eits data to every single client connected 
-   
-        socket.emit("sendMessage",  generateMessage('welcome !'))
+           if(error){
 
-        socket.broadcast.emit("sendMessage", generateMessage("A new user has joined the chat room !!!"))
+               return callback(error);
+
+           }
+
+        socket.join(user.room)
+        socket.emit("sendMessage",  generateMessage('Chatify Bot 🤖','Welcome to this chat room ! say hi 👋'))
+
+        socket.broadcast.to(user.room).emit("sendMessage", generateMessage('Chatify Bot 🤖',`${user.username} has just joined the chat room !!!`))
+        io.to(user.room).emit('roomData',{
+            room : user.room,
+            users: getUsersInRoom(user.room)
+        })
+            callback()
+        })
+
 
         socket.on("upMessage" , (message , dilivered) =>{
 
-
-                const filter = new Filter();
+                const user  = getUser(socket.id)
+                const filter = new Filter()
 
                 if(filter.isProfane(message)){
 
                     return dilivered('sensorship !!!')
                 }
 
-                io.emit('sendMessage', generateMessage(message))
+                io.to(user.room).emit('sendMessage', generateMessage(user.username,message))
 
                 dilivered()
 
@@ -54,33 +67,30 @@ io.on('connection' , (socket) =>{
 
         socket.on("Location" , (position , infoRecived) =>{
 
-            io.emit('userLocation',generateLocation(`https://google.com/maps?q=${position.latitude},${position.longitude}`))
+            const user  = getUser(socket.id)
+
+            io.to(user.room).emit('userLocation',generateLocation(user.username, `https://google.com/maps?q=${position.latitude},${position.longitude}`))
         
-            infoRecived();
+            infoRecived()
         
         })
 
         // when user left
         socket.on('disconnect' , () =>{
+            
+           const user =  removeUser(socket.id)
 
-            io.emit('sendMessage', generateMessage('user has left the room !!!'))
+           if(user){
+
+            io.to(user.room).emit('sendMessage', generateMessage('Chatify Bot 🤖',`${user.username} has left the chat room !!!`))
+            io.to(user.room).emit('roomData' , {
+
+                room:user.room,
+                users:getUsersInRoom(user.room)
+            })
+
+           }    
         })
-
-
-
-
-    
-    // -------------------------------------------------------------------
-    
-    // socket.on("updateValue" , () =>{
-       
-    //     count++;
-    //     // socket.emit('updateCounter',count)  //only update value for a single client
-
-    //     io.emit('updateCounter',count) //upadted value for all the connected client
-    // })
-
-
 
 })
 

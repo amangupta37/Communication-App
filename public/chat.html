@@ -23,14 +23,29 @@
 
 <div class="container">
     <div class="side-navbar">
-        <h1>This is chating the app</h1>
+        <div class="active-rooms">
+
+            <div class="svg-icon">
+                <img id= "img-user"src="images/userprofile.png" />
+            </div>
+            <div class="title-rooms">
+                <h2>Active Users</h2>
+            </div>
+           
+        </div>
+         <div class="active-room-list">
+            <div id="room-deatils-list">
+
+            </div>
+         </div>
     </div>
 
     <div class="message-area">
         
         <div class="room-name">
-            <div class="room-name-box">
-                <h2 >Room 1 </h2>
+           
+            <div class="room-name-box" id="rooms-list-data">
+             
             </div>
         </div>
     
@@ -69,7 +84,7 @@
     <script id="message-template" type="text/html">
         <div class="user-message">
               <div class="user-name">
-               <h3>Aman Gupta</h3>
+               <h3  style="text-transform: capitalize">{{username}}</h3>
               </div>
               <div class="user-text">
                 <p>{{message}}</p>
@@ -84,13 +99,13 @@
         
         <div class="user-message">
             <div class="user-name">
-             <h3>Aman Gupta</h3>
+             <h3  style="text-transform: capitalize">{{username}}</h3>
             </div>
             <div class="user-text">
                 <a id="style-link" href="{{Location}}" target="_blank">
                   <div class="link-location">
                     <div class="my-currentloacation">
-                        <p>View My Current Location </p>
+                        <p>Click here to view my current location </p>
                      </div>
                      <div class="location-l">
                          <img id="user-l" src="./images/user-l.png" />
@@ -102,8 +117,29 @@
               <p>{{createdAt}}</p>
             </div>
       </div>
-
     </script>
+
+    <script id="sidebar-room-template" type="text/html">
+
+        <div class="big-container">
+           
+            <div class="users-list-new">
+                <div class="room-list-data">
+                </div>
+                <ul id="userlist">
+                    {{#users}}
+                        <li  style="text-transform: capitalize">{{username}}</li>
+                    {{/users}}
+                </ul>
+            </div>
+        </div>
+    </script>
+
+    <script id="header-template-new-user" type="text/html">
+       <h2 style="text-transform: capitalize">{{room}}</h2>
+    </script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>

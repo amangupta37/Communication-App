@@ -5,14 +5,25 @@ const formInput = document.getElementById("input-box");
 const formBtn = document.getElementById("btn");
 const locationBtn = document.getElementById("share-location-btn");
 const Message = document.getElementById('message');
+const RoomList = document.getElementById('room-deatils-list');
+const HeaderRoom = document.getElementById('rooms-list-data');
 const MessageTemplate = document.getElementById('message-template').innerHTML;
 const LocationTemplate = document.getElementById('location-message-template').innerHTML;
+const sidebarTemplate = document.getElementById('sidebar-room-template').innerHTML;
+const headerTemplate = document.getElementById('header-template-new-user').innerHTML;
+
+const { username , room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 
+
+console.log(Qs.parse(location.search, { ignoreQureyPrefix: true }));
+console.log(username)
+console.log(room)
 socket.on('sendMessage', (message) => {    // accept event and data from server
    
     console.log(` ${message}`)
     const html = Mustache.render(MessageTemplate,{
+        username : message.username,
         message:message.text, 
         createdAt : moment(message.createdAt).format('h:mm a')
     
@@ -25,6 +36,7 @@ socket.on('userLocation',(url) =>{
     console.log(`${url}`)
 
     const html = Mustache.render(LocationTemplate,{
+        username : url.username,
         Location:url.locationurl,
         createdAt: moment(url.createdAt).format('h:mm a')
 
@@ -32,6 +44,26 @@ socket.on('userLocation',(url) =>{
     Message.insertAdjacentHTML('beforeend',html)
 })
 
+socket.on('roomData', ({room,users}) =>{
+
+
+      const html = Mustache.render(sidebarTemplate,{
+       room,
+       users
+
+    });
+    RoomList.innerHTML=html
+
+    const newhtml = Mustache.render(headerTemplate,{
+        room,
+    })
+
+    HeaderRoom.innerHTML=newhtml
+
+
+    console.log(room);
+    console.log(users);
+})
 
 
 formdata.addEventListener('submit' , (e) =>{
@@ -95,16 +127,12 @@ locationBtn.addEventListener('click' , () =>{
 
 })
 
+socket.emit('join' , { username, room},(error) =>{
 
-//-------------------------------------------------------------------
-// const btn = document.getElementById("inc");
-// btn.addEventListener('click', () =>{
+    if(error){
+        alert(error)
+        location.href =  '/'
+    }
 
-//     console.log("1");
-
-//     socket.emit("updateValue");
-
-// });
-
-
+})
 
