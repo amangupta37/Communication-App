@@ -421,7 +421,9 @@ body::-webkit-scrollbar {
 
 @media only screen and (max-width: 480px) {
   /* ------------Responsive index page---------------- */
-
+  body {
+    background: #000;
+  }
   .auth-page {
     width: 100%;
     height: 100vh;
