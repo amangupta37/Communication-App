@@ -14,7 +14,11 @@ body::-webkit-scrollbar {
   grid-template-rows: 80px;
 }
 /* -------------style index.html------------------- */
-
+.auth-page {
+  width: 100%;
+  height: 100vh;
+  background: #000;
+}
 .user-login {
   width: 100%;
   height: 90vh;
@@ -133,7 +137,6 @@ body::-webkit-scrollbar {
   margin-top: 1rem;
   display: flex;
   gap: 12px;
-  cursor: pointer;
 }
 
 .app-name {
@@ -142,6 +145,7 @@ body::-webkit-scrollbar {
   font-weight: 400;
   line-height: 48px;
   text-align: start;
+  cursor: pointer;
 }
 
 .logo-img {
@@ -195,7 +199,7 @@ body::-webkit-scrollbar {
   background: lime;
 }
 #message {
-  width: 80%;
+  width: 90%;
 }
 
 .user-message {
@@ -411,4 +415,94 @@ body::-webkit-scrollbar {
   width: 20%;
   height: 3.5rem;
   background: #000;
+}
+
+/* ---------------Mobile Responsive---------------------------- */
+
+@media only screen and (max-width: 480px) {
+  /* ------------Responsive index page---------------- */
+  .user-login {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border: 1px solid #202327;
+  }
+  .app-name {
+    font-size: 1rem;
+  }
+  .logo-img {
+    width: 15%;
+  }
+
+  .login-box {
+    width: 95%;
+  }
+
+  .login-cont-new {
+    width: 97%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 120px 110px 20px;
+  }
+
+  /* ----Responsive Chat page---- */
+
+  .side-navbar {
+    /* visibility: hidden; */
+    display: none;
+  }
+  .container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 90vh;
+  }
+
+  .message-area {
+    width: 100%;
+  }
+  .user-message {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    width: 100%;
+    height: 18vh;
+    background: #000;
+    border-radius: 0.2rem;
+    border: 1px solid rgb(29, 161, 242);
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0fr;
+    box-shadow: 1px 16px 29px 1px rgba(63, 56, 56, 0.75);
+    -webkit-box-shadow: 1px 16px 29px 1px rgba(63, 56, 56, 0.75);
+    -moz-box-shadow: 1px 16px 29px 1px rgba(63, 56, 56, 0.75);
+  }
+  .user-text {
+    width: 90%;
+    margin-top: 0.1rem;
+    margin-left: 0.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgb(217, 217, 217);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .link-location {
+    width: 100%;
+  }
+  .my-currentloacation {
+    display: none;
+  }
+  .location-l {
+    width: 20%;
+    margin-top: 0.5rem;
+    margin-left: 2rem;
+  }
+  .duration {
+  }
+  #new-style {
+    padding-bottom: 1rem;
+  }
 }
