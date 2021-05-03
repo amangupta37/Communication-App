@@ -421,6 +421,13 @@ body::-webkit-scrollbar {
 
 @media only screen and (max-width: 480px) {
   /* ------------Responsive index page---------------- */
+
+  .auth-page {
+    width: 100%;
+    height: 100vh;
+    background: #000;
+  }
+
   .user-login {
     width: 100%;
     height: 100%;
@@ -500,8 +507,7 @@ body::-webkit-scrollbar {
     margin-top: 0.5rem;
     margin-left: 2rem;
   }
-  .duration {
-  }
+
   #new-style {
     padding-bottom: 1rem;
   }
